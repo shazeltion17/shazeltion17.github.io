@@ -44,7 +44,9 @@
 
         // Close the dialog and show the data table for this worksheet
         $('#choose_sheet_dialog').modal('toggle');
-        loadSelectedMarks(worksheetName);
+
+          showChoosedataDialog(worksheetName);
+        //loadSelectedMarks(worksheetName);
       });
 
       // Add our button to the list of worksheets to choose from
@@ -54,6 +56,46 @@
     // Show the dialog
     $('#choose_sheet_dialog').modal('toggle');
   }
+
+
+function showChoosedataDialog (worksheetName) {
+    // Clear out the existing list of data points
+    $('#choose_data_dialog').empty();
+
+    // Set the dashboard's name in the title
+    console.log(worksheetName)
+
+    // $('#choose_selectedSheet_title').text(dashboardName);
+
+    // // The first step in choosing a sheet will be asking Tableau what sheets are available
+    // const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
+
+    // // Next, we loop through all of these worksheets add add buttons for each one
+    // worksheets.forEach(function (worksheet) {
+    //   // Declare our new button which contains the sheet name
+    //   const button = createButton(worksheet.name);
+
+    //   // Create an event handler for when this button is clicked
+    //   button.click(function () {
+    //     // Get the worksheet name which was selected
+    //     const worksheetName = worksheet.name;
+
+    //     // Close the dialog and show the data table for this worksheet
+    //     $('#choose_sheet_dialog').modal('toggle');
+
+    //     //loadSelectedMarks(worksheetName);
+    //   });
+
+    //   // Add our button to the list of worksheets to choose from
+    //   $('#choose_sheet_buttons').append(button);
+    // });
+
+    // // Show the dialog
+    // $('#choose_sheet_dialog').modal('toggle');
+  }
+
+
+
 
 
    function createButton (buttonTitle) {
@@ -116,11 +158,6 @@
       	   createthis(data);
   		})
 }
-    // console.log(data)
-    // mytest ()
-    //pdata(data)
-    	
- 
 
 
         // Add an event listener for the selection changed event on this sheet.

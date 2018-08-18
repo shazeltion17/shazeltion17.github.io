@@ -1,6 +1,7 @@
 'use strict';
 
 // Wrap everything in an anonymous function to avoid polluting the global namespace
+//This is a test
 
 (function () {
   // Use the jQuery document ready signal to know when everything has been initialized

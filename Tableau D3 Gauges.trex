@@ -3,8 +3,8 @@
   <dashboard-extension id="com.tableau.extensions.dashboard.tutorial.part.1" extension-version="0.1.0">
     <default-locale>en_US</default-locale>
     <name resource-id="name"/>
-    <description>Demonstrates getting the selected marks and responding to user input</description>
-    <author name="projectfrelard" email="projectfrelard@tableau.com" organization="tableau" website="https://www.tableau.com"/>
+    <description>This provides insight into how to leverage D3 visualizations within Tableau</description>
+    <author name="D3 Extentions Sample" email="sehrlich@tableau.com" organization="tableau" website="https://www.tableau.com"/>
     <min-api-version>0.6</min-api-version>
     <source-location>
       <url>https:///shazeltion17.github.io/MarksSelection.html</url>
@@ -13,7 +13,7 @@
   </dashboard-extension>
   <resources>
     <resource id="name">
-      <text locale="en_US">Tutorial - Part 1</text>
+      <text locale="en_US">D3 Gauge Extensions Sample</text>
     </resource>
   </resources>
 </manifest>

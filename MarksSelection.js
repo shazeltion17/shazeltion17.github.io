@@ -14,9 +14,12 @@
     });
   });
 
+
+
+  // Initialize some variables
   var data = 0
-  var me = 0 
-  var sam = []
+  var firstSelection = 0 
+  var selectedValue = []
 
     function showChooseSheetDialog () {
     // Clear out the existing list of sheets
@@ -102,8 +105,8 @@ function getthedata (worksheetName) {
 				    r[keys[i]] = values[i];
 				}
 
-		if (me==0) {
-			me = me + 1
+		if (firstSelection==0) {
+			firstSelection = firstSelection + 1
       		columns.forEach(function (cell) {
       		const button = createButton(cell);
 
@@ -112,7 +115,7 @@ function getthedata (worksheetName) {
         // Get the worksheet name which was selected
         // Close the dialog and show the data table for this worksheet
         		$('#choose_data_dialog').modal('toggle');
-        		sam.push(cell)
+        		selectedValue.push(cell)
         //loadSelectedMarks(worksheetName);
         		data = Math.abs(r[cell]).toFixed(2)
         		createthis(data)
@@ -125,7 +128,7 @@ function getthedata (worksheetName) {
         	$('#choose_data_dialog').modal('toggle');
 
     		} else {
-    			data = Math.abs(r[sam]).toFixed(2)
+    			data = Math.abs(r[selectedValue]).toFixed(2)
     			createthis(data)
 
     	}
@@ -143,66 +146,7 @@ function getthedata (worksheetName) {
     return button;
   }
 
-    function loadalldata (worksheetName) {
-
-
-    	const worksheet = getSelectedSheet(worksheetName);
-    	worksheet.getSummaryDataAsync().then (function (sumdata) {
-    	const worksheetData = sumdata;
-    	const data = worksheetData.data.map(function (row, index) {
-      		const rowData = row.map(function (cell) {
-          return cell.value;
-      	});
-        return rowData;
-      	});
-    		return data
-    	});
-  	}
-
-   function loadSelectedMarks (worksheetName) {
-   	    // Remove any existing event listeners
-	const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets[0];
-    if (unregisterEventHandlerFunction) {
-      unregisterEventHandlerFunction();
-    }
-    // Get the worksheet object we want to get the selected marks for
-    //const data = 0
-    if (isNaN(data)) {
-
-		var data = (function() {
-   			loadalldata()
-		})(); 
-
-
-    } else {
-    	// Call to get the selected marks for our sheet
-    	worksheets.getSelectedMarksAsync().then(function (marks) {
-        // Get the first DataTable for our selected marks (usually there is just one)
-        const worksheetData = marks.data[0];
-        const data = worksheetData.data.map(function (row, index) {
-      	const rowData = row.map(function (cell) {
-          return cell.value;
-          });
-        return rowData[2];
-          });
-
-      const columns = worksheetData.columns.map(function (column) {
-        return { title: column.fieldName };
-      	  });
-      	   createthis(data);
-  		})
-}
-
-
-        // Add an event listener for the selection changed event on this sheet.
-    unregisterEventHandlerFunction = worksheets.addEventListener(tableau.TableauEventType.MarkSelectionChanged, function (selectionEvent) {
-
-
-      // When the selection changes, reload the data
-      loadSelectedMarks(worksheetName);
-
-  });
-}
+//////Begin D3 Visualization referencing/////////////////
 
 function createthis (data) {
 

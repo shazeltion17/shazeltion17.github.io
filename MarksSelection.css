@@ -4,8 +4,9 @@ body {
 
 
 svg {
-	vertical-align: center;
-	height: center;
+	height: 100%;
+	width: 100%;
 	background: auto;
+	vertical-align: center;
 }
 

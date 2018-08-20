@@ -11,15 +11,12 @@
       // Get the dashboard name from the tableau namespace and set it as our title
       //populateDataTable();
       showChooseSheetDialog();
-
-      initializeButtons();
     });
   });
 
-  let unregisterEventHandlerFunction;
   var data = 0
-
-
+  var me = 0 
+  var sam = []
 
     function showChooseSheetDialog () {
     // Clear out the existing list of sheets
@@ -44,7 +41,9 @@
 
         // Close the dialog and show the data table for this worksheet
         $('#choose_sheet_dialog').modal('toggle');
-        loadSelectedMarks(worksheetName);
+
+          getthedata(worksheetName);
+        //loadSelectedMarks(worksheetName);
       });
 
       // Add our button to the list of worksheets to choose from
@@ -54,6 +53,85 @@
     // Show the dialog
     $('#choose_sheet_dialog').modal('toggle');
   }
+
+ let unregisterEventHandlerFunction;
+
+
+function getthedata (worksheetName) {
+
+    if (unregisterEventHandlerFunction) {
+      unregisterEventHandlerFunction();
+    }
+    
+    // Clear out the existing list of data points
+    // The first step in choosing a sheet will be asking Tableau what data points are available
+	const worksheet = getSelectedSheet(worksheetName);
+	worksheet.getSummaryDataAsync().then (function (sumdata) {
+	const worksheetData = sumdata;
+	const data = worksheetData.data.map(function (row, index) {
+    const rowData = row.map(function (cell) {
+          return cell.value;
+      	});
+        return rowData;
+      	});
+
+		const columns = worksheetData.columns.map(function (column) {
+			return	column.fieldName	
+		});
+      	    	showChoosedataDialog(columns, data[0])
+
+      	});
+
+    unregisterEventHandlerFunction = worksheet.addEventListener(tableau.TableauEventType.MarkSelectionChanged, function (selectionEvent) {
+      // When the selection changes, reload the data
+      getthedata(worksheetName);
+    });
+
+}
+    function showChoosedataDialog (columns, data) {
+
+      	$('#choose_data_buttons').empty();
+
+      			
+				var r = {},
+				    i,
+				    keys = columns,
+				    values = data;
+
+				for (i = 0; i < keys.length; i++) {
+				    r[keys[i]] = values[i];
+				}
+
+		if (me==0) {
+			me = me + 1
+      		columns.forEach(function (cell) {
+      		const button = createButton(cell);
+
+      // Create an event handler for when this button is clicked
+      		button.click(function () {
+        // Get the worksheet name which was selected
+        // Close the dialog and show the data table for this worksheet
+        		$('#choose_data_dialog').modal('toggle');
+        		sam.push(cell)
+        //loadSelectedMarks(worksheetName);
+        		data = Math.abs(r[cell]).toFixed(2)
+        		createthis(data)
+      		});
+
+      // Add our button to the list of worksheets to choose from
+      		$('#choose_data_buttons').append(button);
+      	   		//console.log(cell)
+    		});
+        	$('#choose_data_dialog').modal('toggle');
+
+    		} else {
+    			data = Math.abs(r[sam]).toFixed(2)
+    			createthis(data)
+
+    	}
+	}
+
+
 
 
    function createButton (buttonTitle) {
@@ -67,18 +145,16 @@
 
     function loadalldata (worksheetName) {
 
-    			
-    	const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets[0];
-    	worksheets.getSummaryDataAsync().then (function (sumdata) {
+
+    	const worksheet = getSelectedSheet(worksheetName);
+    	worksheet.getSummaryDataAsync().then (function (sumdata) {
     	const worksheetData = sumdata;
     	const data = worksheetData.data.map(function (row, index) {
       		const rowData = row.map(function (cell) {
           return cell.value;
       	});
-        return rowData[2];
+        return rowData;
       	});
-      	    createthis(data)
-
     		return data
     	});
   	}
@@ -116,11 +192,6 @@
       	   createthis(data);
   		})
 }
-    // console.log(data)
-    // mytest ()
-    //pdata(data)
-    	
- 
 
 
         // Add an event listener for the selection changed event on this sheet.
@@ -136,7 +207,7 @@
 function createthis (data) {
 
  	$("#fillgauge1").empty();
-	var gauge1 = loadLiquidFillGauge("fillgauge1", data[0]*100);
+	var gauge1 = loadLiquidFillGauge("fillgauge1", data*100);
 	var config1 = liquidFillGaugeDefaultSettings();
 	config1.circleColor = "#FF7777";
 	config1.textColor = "#FF4444";

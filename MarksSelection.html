@@ -19,8 +19,7 @@
     <script src="./MarksSelection.js"></script>
   </head>
   <body>
-    <div class="container-fluid">
-    </div>
+    <div class="container-fluid"></div>
     <div id="choose_sheet_dialog" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -34,12 +33,23 @@
         </div>
       </div>
     </div>
-    <div id="data_table_wrapper"></div>
-    <div id="data_table" ></div>
+    <div id="choose_data_dialog" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Choose data<span class="sheet_name" id="choose_data_title"></span></h4>
+          </div>
+          <div class="modal-body">
+            <div id="choose_data_buttons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
         <!-- <svg></svg>  -->
-        <svg id="fillgauge1" width="97%" height="250" align='middle'></svg>
+        <svg id="fillgauge1"></svg>
         <script src="https://d3js.org/d3.v3.min.js"></script>
-
   </body>
 </html>

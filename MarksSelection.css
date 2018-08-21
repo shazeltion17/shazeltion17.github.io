@@ -1,12 +1,13 @@
 body {
     background-color: auto;
+    height: 100%
+    width: 100%;
 }
 
 
 svg {
 	height: 100%;
 	width: 100%;
-	background: auto;
-	vertical-align: center;
+	vertical-align: middle;
 }
 
